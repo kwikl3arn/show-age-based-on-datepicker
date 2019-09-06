@@ -1,0 +1,45 @@
+<html>
+<head>
+<link rel="stylesheet" href="datepicker.css">
+</head>
+<input class="form-control form-control_1 gui-input" placeholder="DOB" type="text" name="dob" id="dob" autocomplete="nickname">
+<input class="form-control form-control_1 gui-input numeric" placeholder="Age" type="text" name="age" id="age" readonly >
+<span id="err" style="color: red"></span>
+
+<link href="jquery-ui.css" rel="stylesheet"/>
+<script src="jquery.js"></script>
+<script src="bootstrap-datepicker.js"></script>
+</html>
+<script>
+
+    $("#dob").datepicker({
+        changeYear: true,
+        format: 'dd/mm/yyyy',
+        yearRange: '-70:-18',
+        autoclose: true,
+    });
+    $('#dob').keyup(function() {
+        this.value = '';
+    });
+
+    $("#dob").change(function () {
+        var dob = $(this).val();
+        var today = new Date();
+        var dob_year = dob.split('/');
+        var dob_var = dob_year[0] + dob_year[1] + dob_year[2];
+
+        var age = (parseInt(today.getFullYear())) - (parseInt(18));
+        var age2 = today.getFullYear() - dob_year[2];
+
+        console.log('dob year : ' + dob_year[2] + " today year : " + today.getFullYear() + " age : " + age);
+
+        if (age2 >= 18) {
+            $('#err').html('');
+            $('#age').val(age2);
+        } else {
+            $('#err').html('below 18 years not eligible');
+        }
+
+
+    });
+</script>
